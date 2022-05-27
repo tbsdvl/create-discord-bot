@@ -1,20 +1,27 @@
-import "express";
-import createApplication from "express/lib/express";
+import { Express } from "express";
 
 interface Application {
-    app: typeof createApplication,
-    PORT: number,
-    // listen: Function,
+    app: Express,
+    PORT: string | number,
     // middleware: Array<Object>
 };
 
-class App {
-    app: typeof createApplication;
-    PORT: number;
+class App implements Application {
+    app: Express;
+    PORT: number | string;
 
-    constructor(app: typeof createApplication, PORT: number) {
+    constructor(app: Express, PORT: number | string) {
         this.app = app;
         this.PORT = PORT;
+    }
+
+    protected setPort(PORT: number | string) {
+        this.PORT = PORT;
+    }
+
+    // Method to listen for app on instance's port
+    startApp() {
+        this.app.listen(this.PORT);
     }
 }
 

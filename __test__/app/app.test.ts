@@ -1,6 +1,6 @@
 import { App, Application } from '../../main/src/models/App';
-import { startUpApp } from '../../main/src/utils/appUtils';
-import express, { application } from 'express';
+import { startUpBot } from '../../main/src/utils/appUtils';
+import express from "express";
 import 'jest';
 
 // Setup an App interface that has fields for
@@ -30,7 +30,7 @@ describe('App interface', () => {
             // middleware: [express.json({ verify: VerifyDiscordRequest(process.env.PUBLIC_KEY) })]
         }
 
-        const app: Application = new App(options.app, options.PORT);
+        const app: Application = new App(options.app(), options.PORT);
         Bot = app;
     });
     
@@ -39,6 +39,6 @@ describe('App interface', () => {
     });
 
     it('should start the app to listen on port 3000', () => {
-        expect(startUpApp(Bot)).not.toBe(undefined);
+        expect(startUpBot(Bot)).toBe(true);
     });
 })
